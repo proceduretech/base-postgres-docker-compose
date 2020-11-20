@@ -1,0 +1,20 @@
+version: '3'
+
+volumes:
+  local_renewals_postgres_data: {}
+  local_renewals_postgres_data_backups: {}
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/Dockerfile
+    image: renewals_local_postgres
+    container_name: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - local_renewals_postgres_data:/var/lib/postgresql/data
+      - local_renewals_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.postgres
